@@ -1,6 +1,7 @@
 import React, {useContext} from "react"
 import {Context} from "../ContextProvider"
 import PhotoItem from "./PhotoItem"
+import generateImageSize from "../utils/generateImageSize"
 
 function Photos() {
 
@@ -9,14 +10,15 @@ function Photos() {
     const {imageArray} = useContext(Context)
 
     const displayImages = imageArray.map(element => {
-        return(<PhotoItem key={element.url} imageDetails={element} />)
+
+        return(<PhotoItem key={element.id} imageDetails={element} className={generateImageSize(element.id)} />)
     })
 
 
     return (
-        <div>
+        <main className="photos">
             {displayImages}
-        </div>
+        </main>
     )
 }
 

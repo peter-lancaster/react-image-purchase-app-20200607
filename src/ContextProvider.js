@@ -7,6 +7,21 @@ function ContextProvider({children}) {
     console.log("ContextProvider")
     const [imageArray, setImageArray] = useState([])
 
+    function favoriteToggle(imageId) {
+
+        const newImageArray = imageArray.map(element => {
+                    if(element.id === imageId) {
+                        return {...element, isFavorite : !element.isFavorite}
+                    } else {
+                        return element
+                    }
+                }
+            )
+
+        setImageArray(newImageArray)
+
+    }
+
 
     function imageFetch() {
 
@@ -22,7 +37,7 @@ function ContextProvider({children}) {
     useEffect(() => imageFetch(),[])
 
     return(
-        <Context.Provider value={{imageArray}}>
+        <Context.Provider value={{imageArray, favoriteToggle}}>
             {children}
         </Context.Provider>
     )
