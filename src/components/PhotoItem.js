@@ -4,13 +4,20 @@ import {Context} from "../ContextProvider"
 
 function PhotoItem({imageDetails, className}) {
 
-    const {favoriteToggle} = useContext(Context)
+    console.log("PhotoItem")
+
+    const {favoriteToggle, cartToggle, cartArray} = useContext(Context)
 
     const {hovered, hoverTarget} = useHover()
     
     function addToBasketIcon () {
-        if(hovered) {
-           return <i className="ri-add-circle-line cart"></i>
+
+        const isImageAlreadyInBasket = cartArray.some(element => element.id === imageDetails.id)
+
+        if (isImageAlreadyInBasket) {
+            return <i onClick={() => cartToggle(imageDetails)} className="ri-shopping-cart-fill cart"></i>
+        } else if (hovered) {
+           return <i onClick={() => cartToggle(imageDetails)} className="ri-add-circle-line cart"></i>
         }
     }
 

@@ -6,9 +6,9 @@ function ContextProvider({children}) {
 
     console.log("ContextProvider")
     const [imageArray, setImageArray] = useState([])
+    const [cartArray, setCartArray] = useState([])
 
     function favoriteToggle(imageId) {
-
         const newImageArray = imageArray.map(element => {
                     if(element.id === imageId) {
                         return {...element, isFavorite : !element.isFavorite}
@@ -17,11 +17,24 @@ function ContextProvider({children}) {
                     }
                 }
             )
-
         setImageArray(newImageArray)
-
     }
 
+    function cartToggle(imageDetails) {
+
+        const isAlreadyInCart = cartArray.some(element => element.id === imageDetails.id)
+
+        let newCartArray = []
+
+        if (isAlreadyInCart) {
+            newCartArray = cartArray.filter(element => element.id !== imageDetails.id)
+            } else {
+            newCartArray = cartArray.concat(imageDetails)
+        }
+
+        setCartArray(newCartArray)
+
+    }
 
     function imageFetch() {
 
@@ -37,7 +50,7 @@ function ContextProvider({children}) {
     useEffect(() => imageFetch(),[])
 
     return(
-        <Context.Provider value={{imageArray, favoriteToggle}}>
+        <Context.Provider value={{imageArray, favoriteToggle, cartArray, cartToggle}}>
             {children}
         </Context.Provider>
     )
