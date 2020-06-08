@@ -10,10 +10,8 @@ function Photos() {
     const {imageArray} = useContext(Context)
 
     const displayImages = imageArray.map(element => {
-
         return(<PhotoItem key={element.id} imageDetails={element} className={generateImageSize(element.id)} />)
     })
-
 
     return (
         <main className="photos">

@@ -6,7 +6,16 @@ function ContextProvider({children}) {
 
     console.log("ContextProvider")
     const [imageArray, setImageArray] = useState([])
-    const [cartArray, setCartArray] = useState([])
+    const [cartArray, setCartArray] = useState([ {
+        "url": "https://github.com/bobziroll/scrimba-react-bootcamp-images/blob/master/pic1.jpg?raw=true",
+        "id": "1",
+        "isFavorite": true
+    },
+    {
+        "url": "https://github.com/bobziroll/scrimba-react-bootcamp-images/blob/master/pic2.jpg?raw=true",
+        "id": "2",
+        "isFavorite": false
+    }])
 
     function favoriteToggle(imageId) {
         const newImageArray = imageArray.map(element => {
@@ -21,9 +30,7 @@ function ContextProvider({children}) {
     }
 
     function cartToggle(imageDetails) {
-
         const isAlreadyInCart = cartArray.some(element => element.id === imageDetails.id)
-
         let newCartArray = []
 
         if (isAlreadyInCart) {
@@ -31,9 +38,11 @@ function ContextProvider({children}) {
             } else {
             newCartArray = cartArray.concat(imageDetails)
         }
-
         setCartArray(newCartArray)
+    }
 
+    function emptyCart() {
+        setCartArray([])
     }
 
     function imageFetch() {
@@ -46,17 +55,14 @@ function ContextProvider({children}) {
         .catch(error => console.error(error))
     }
 
-
     useEffect(() => imageFetch(),[])
 
     return(
-        <Context.Provider value={{imageArray, favoriteToggle, cartArray, cartToggle}}>
+        <Context.Provider value={{imageArray, favoriteToggle, cartArray, emptyCart, cartToggle}}>
             {children}
         </Context.Provider>
     )
 }
-
-
 
 
 export {ContextProvider, Context}

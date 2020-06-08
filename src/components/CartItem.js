@@ -2,32 +2,28 @@ import React, {useContext} from "react"
 import {Context} from "../ContextProvider"
 import useHover from "../utils/useHover"
 
-function CartItem({item}) {
+function CartItem({imageDetails}) {
 
     console.log("CartItem")
 
-    const {cartArray} = useContext(Context)
+    const {cartToggle, favoriteToggle} = useContext(Context)
     const {hovered, hoverTarget} = useHover()
 
-    function binIconDisplay() {
 
+    function binIconDisplay() {
         if(hovered) {
-            return <i ref={hoverTarget} class="ri-delete-bin-fill"></i>
+            return <i onClick={() => cartToggle(imageDetails)} ref={hoverTarget} className="ri-delete-bin-fill"></i>
         } else {
-            return <i ref={hoverTarget} class="ri-delete-bin-line"></i>
+            return <i ref={hoverTarget} className="ri-delete-bin-line"></i>
         }
     }
 
-
+    
     return(<div className="cart-item">
-        {binIconDisplay()}
-        <img src={item.url} alt="" width="230px" />
-        <p>$5.99</p>
+            {binIconDisplay()}
+            <img src={imageDetails.url} alt="" width="230px" />
+            <p>$5.99</p>
         </div>
-
-
-
-
         )
         
 
